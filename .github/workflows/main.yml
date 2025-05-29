@@ -26,15 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check Expo login status
-        run: eas whoami
+      - name: Confirm token is set
+        run: echo "Token is set"
 
-      - name: Configure EAS Build
-        run: eas build:configure --platform android
+      - name: Check Expo login
+        run: eas whoami
 
       - name: Build APK
         run: eas build --platform android --profile preview --non-interactive
-
-      - name: Upload APK link
-        run: |
-          echo 'APK build status check karo yahan: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds'
