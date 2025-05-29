@@ -9,7 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Yahan apka  EXPO_TOKEN automatically environment variable ban jayega
       EAS_ACCESS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
     steps:
@@ -21,21 +20,21 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install Expo CLI and EAS CLI (latest)
+      - name: Install Expo CLI and EAS CLI
         run: npm install -g expo-cli eas-cli@latest
 
-      - name: Install project dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Check login status with Expo
+      - name: Check Expo login status
         run: eas whoami
 
-      - name: Configure EAS Build for Android
+      - name: Configure EAS Build
         run: eas build:configure --platform android
 
-      - name: Build Android APK
+      - name: Build APK
         run: eas build --platform android --profile preview --non-interactive
 
-      - name: Upload APK Link
+      - name: Upload APK link
         run: |
-          echo 'Build check karne ke liye yahan jao: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds'
+          echo 'APK build status check karo yahan: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds'
