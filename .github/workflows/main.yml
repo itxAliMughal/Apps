@@ -26,10 +26,7 @@ jobs:
 
       - name: Login to Expo (Anonymous)
         run: |
-          eas whoami
-          if [ $? -ne 0 ]; then
-            eas login --non-interactive --access-token ${{ secrets.EXPO_TOKEN }}
-          fi
+          eas whoami || eas login --non-interactive --access-token ${{ secrets.EXPO_TOKEN }}
 
       - name: Configure EAS Build
         run: eas build:configure --platform android
@@ -39,4 +36,4 @@ jobs:
 
       - name: Upload APK Link
         run: |
-          echo "Check build status here: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds"
+          echo 'Check build status here: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds'
