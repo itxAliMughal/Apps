@@ -34,6 +34,5 @@ jobs:
       - name: Build APK
         run: eas build --platform android --profile preview --non-interactive
 
-      -  name: upload APK Link
-  run: echo 'Check build status here: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds'
-
+      -   name: upload APK Link
+    run: echo 'Check build status here: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds'
