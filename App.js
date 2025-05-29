@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator, Linking, P
 import { Camera } from 'expo-camera';
 import * as OCR from 'expo-mlkit-ocr';
 import * as Contacts from 'expo-contacts';
+// Just a test change to trigger GitHub build
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
