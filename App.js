@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import * as OCR from 'expo-mlkit-ocr';
 import * as Contacts from 'expo-contacts';
 // Just a test change to trigger GitHub build
+// just testing
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
