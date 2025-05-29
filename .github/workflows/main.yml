@@ -1,0 +1,39 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK using Expo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Expo CLI
+        run: npm install -g expo-cli eas-cli
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Login to Expo (Anonymous)
+        run: eas whoami || eas login --non-interactive --access-token ${{ secrets.EXPO_TOKEN }}
+
+      - name: Configure EAS Build
+        run: eas build:configure --platform android
+
+      - name: Build APK
+        run: eas build --platform android --profile preview --non-interactive
+
+      - name: Upload APK Link
+        run: echo "Check build status here: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds"
+
