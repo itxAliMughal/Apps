@@ -25,7 +25,11 @@ jobs:
         run: npm install
 
       - name: Login to Expo (Anonymous)
-        run: eas whoami || eas login --non-interactive --access-token ${{ secrets.EXPO_TOKEN }}
+        run: |
+          eas whoami
+          if [ $? -ne 0 ]; then
+            eas login --non-interactive --access-token ${{ secrets.EXPO_TOKEN }}
+          fi
 
       - name: Configure EAS Build
         run: eas build:configure --platform android
