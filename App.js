@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator, Linking, Platform } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator, Linking } from 'react-native';
 import { Camera } from 'expo-camera';
-import * as OCR from 'expo-mlkit-ocr';
+import TextRecognition from '@react-native-ml-kit/text-recognition';
 import * as Contacts from 'expo-contacts';
-// Just a test change to trigger GitHub build
-// just testing
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -24,17 +22,16 @@ export default function App() {
     if (!cameraRef.current) return;
 
     setIsProcessing(true);
-    const photo = await cameraRef.current.takePictureAsync({ skipProcessing: true });
+    const photo = await cameraRef.current.takePictureAsync({ base64: true });
+    const result = await TextRecognition.recognize(photo.uri);
 
-    const blocks = await OCR.detectFromUri(photo.uri);
-    setTextBlocks(blocks);
+    setTextBlocks(result.blocks || []);
     setIsProcessing(false);
   };
 
-  // Extract phone number from scanned text
   const getPhoneNumber = () => {
     const joinedText = textBlocks.map(b => b.text).join(' ');
-    const match = joinedText.match(/\+?\d{10,13}/); // match 10-13 digit number
+    const match = joinedText.match(/\+?\d{10,13}/);
     return match ? match[0] : '';
   };
 
@@ -44,18 +41,12 @@ export default function App() {
 
   const handleWhatsApp = () => {
     const phone = getPhoneNumber();
-    if (phone) {
-      const url = `https://wa.me/${phone}`;
-      Linking.openURL(url);
-    }
+    if (phone) Linking.openURL(`https://wa.me/${phone}`);
   };
 
   const handleCall = () => {
     const phone = getPhoneNumber();
-    if (phone) {
-      const url = `tel:${phone}`;
-      Linking.openURL(url);
-    }
+    if (phone) Linking.openURL(`tel:${phone}`);
   };
 
   const handleSaveContact = async () => {
@@ -93,7 +84,6 @@ export default function App() {
           {textBlocks.map((block, index) => (
             <Text key={index} style={styles.text}>{block.text}</Text>
           ))}
-
           <View style={styles.actions}>
             <TouchableOpacity style={styles.actionBtn} onPress={handleWhatsApp}>
               <Text style={styles.actionText}>📲 WhatsApp</Text>
