@@ -1,4 +1,4 @@
-name: Build APK without Expo
+name: Build APK (Local Gradle)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build APK
+    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
@@ -20,25 +20,13 @@ jobs:
           distribution: 'temurin'
           java-version: 17
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Setup Gradle
-        run: |
-          cd android
-          chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x android/gradlew
 
       - name: Build APK
-        run: |
-          cd android
-          ./gradlew assembleRelease
+        run: cd android && ./gradlew assembleRelease
 
-      - name: Upload APK Artifact
+      - name: Upload release APK
         uses: actions/upload-artifact@v2
         with:
           name: release-apk
