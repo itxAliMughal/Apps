@@ -1,34 +1,45 @@
-name: Build Android APK
- 
+name: Build APK without Expo
+
 on:
   push:
     branches:
-      - main 
-      
+      - main
+
 jobs:
   build:
+    name: Build APK
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 18
 
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
-
       - name: Install dependencies
         run: npm install
 
-      - name: Build APK using EAS
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --platform android --profile preview --non-interactive
-
-      - name: Upload APK Link
+      - name: Setup Gradle
         run: |
-          echo "Check build status here: https://expo.dev/accounts/legend_124/projects/ScannerPro/builds"
+          cd android
+          chmod +x gradlew
+
+      - name: Build APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
