@@ -27,6 +27,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Use Gradle 8.4 (Compatible)
+        run: |
+          wget https://services.gradle.org/distributions/gradle-8.4-bin.zip
+          unzip gradle-8.4-bin.zip
+          echo "$GITHUB_WORKSPACE/gradle-8.4/bin" >> $GITHUB_PATH
+
       - name: Grant execute permission for gradlew
         run: chmod +x android/gradlew
 
