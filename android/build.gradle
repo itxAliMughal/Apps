@@ -1,3 +1,5 @@
+// android/build.gradle
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -6,27 +8,18 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath('com.android.tools.build:gradle:8.1.4')
-    classpath('com.facebook.react:react-native-gradle-plugin')
-    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10')
+    classpath("com.android.tools.build:gradle:8.1.4")
+    classpath("com.facebook.react:react-native-gradle-plugin:0.73.3")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
   }
 }
 
-def reactNativeAndroidDir = new File(
-  providers.exec {
-    workingDir(rootDir)
-    commandLine("node", "--print", "require.resolve('react-native/package.json')")
-  }.standardOutput.asText.get().trim(),
-  "../android"
-)
-
 allprojects {
   repositories {
+    // ✅ Correct location for React Native Android artifacts
     maven {
-      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-      url(reactNativeAndroidDir)
+      url "$rootDir/../node_modules/react-native/android"
     }
-
     google()
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
