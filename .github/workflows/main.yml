@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +26,7 @@ jobs:
         run: cd android && ./gradlew assembleRelease
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4
         with:
           name: release-apk
           path: android/app/build/outputs/apk/release/app-release.apk
