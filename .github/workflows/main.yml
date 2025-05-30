@@ -3,8 +3,8 @@ name: Build Android APK
 on:
   push:
     branches:
-      - main
-
+      - main 
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,24 +13,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 18
 
-      - name: Install Expo CLI
-        run: npm install -g expo-cli eas-cli
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
 
       - name: Install dependencies
         run: npm install
 
-      - name: Login to Expo (Anonymous)
-        run: eas whoami || eas login --non-interactive --access-token ${{ secrets.EXPO_TOKEN }}
-
-      - name: Configure EAS Build
-        run: eas build:configure --platform android
-
-      - name: Build APK
+      - name: Build APK using EAS
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas build --platform android --profile preview --non-interactive
 
       - name: Upload APK Link
