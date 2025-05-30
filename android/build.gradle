@@ -9,15 +9,16 @@ buildscript {
   }
   dependencies {
     classpath("com.android.tools.build:gradle:8.1.4")
-    classpath("com.facebook.react:react-native-gradle-plugin:0.73.3")
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10")
+    // ✅ This is the new correct way, auto-managed by React Native
+    classpath("com.facebook.react:react-native-gradle-plugin")
   }
 }
 
 allprojects {
   repositories {
-    // ✅ Correct location for React Native Android artifacts
     maven {
+      // ✅ Correct React Native Android artifacts location
       url "$rootDir/../node_modules/react-native/android"
     }
     google()
