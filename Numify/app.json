@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "Numify",
+    "slug": "ScanPro",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/Numify.png",
+    "scheme": "scanpro",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "permissions": [
+        "CAMERA",
+        "READ_CONTACTS",
+        "WRITE_CONTACTS",
+        "CALL_PHONE"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/Numify.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.legend_124.ScanPro",
+      "versionCode": 10
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-scanner.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5d810ea3-ff44-4c5f-8768-4c2260050755"
+      }
+    }
+  }
+}
